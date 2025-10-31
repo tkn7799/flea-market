@@ -33,3 +33,20 @@ php artisan migrate
 php artisan db:seed
 ```
 
+## 使用技術(実行環境)
+
+- PHP 8.1.33
+- Laravel 8.83.8
+- MySQL 8.0.26
+
+## ER 図
+
+## URL
+- phpMyAdmin：http://localhost:8080/
+
+- お問い合わせフォーム入力ページ:http://localhost/
+- お問い合わせフォーム確認ページ:http://localhost/confirm
+- サンクスページ :http://localhost/thanks
+- 管理画面 :http://localhost/admin
+- ユーザ登録ページ :http://localhost/register
+- ログインページ :http://localhost/login
