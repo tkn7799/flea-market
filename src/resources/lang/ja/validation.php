@@ -147,7 +147,7 @@ return [
     */
 
     'attributes' => [
-        'name' => 'お名前',
+        'user_name' => 'お名前',
         'email' => 'メールアドレスはメール形式で入力してください',
         'password' => 'パスワード'
     ],

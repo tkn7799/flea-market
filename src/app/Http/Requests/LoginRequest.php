@@ -25,7 +25,20 @@ class LoginRequest extends FortifyLoginRequest
     {
         return [
             'email' => 'required | email',
-            'password' => 'required | min:8 | confirmed',
+            'password' => 'required|min:8',
         ];
+    }
+
+    public function authenticate()
+    {
+        $this->ensureIsNotRateLimited();
+
+        if (! \Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
+            throw ValidationException::withMessages([
+                'email' => __('auth.failed'),
+            ]);
+        }
+
+        rateLimiter()->clear($this->throttleKey());
     }
 }

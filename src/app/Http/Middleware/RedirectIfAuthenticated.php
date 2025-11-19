@@ -23,7 +23,14 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
+                $user = Auth::user();
+
+                // 初回設定がまだならプロフィール設定へ
+                if (is_null($user->profile_image)) {
+                    return redirect('/mypage/profile');
+                }
+
+                return redirect('/');
             }
         }
 

@@ -1,0 +1,100 @@
+.sell-container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.sell-title {
+    text-align: center;
+    font-size: 22px;
+    margin-bottom: 30px;
+    font-weight: bold;
+}
+
+.form-section {
+    margin-bottom: 35px;
+}
+
+.form-label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.image-upload-box {
+    width: 100%;
+    height: 160px;
+    border: 2px dashed #ff8d8d;
+    background: #fffafa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-select-label {
+    color: #ff7a7a;
+    padding: 6px 14px;
+    border: 1px solid #ff7a7a;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.category-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.category-tag {
+    border: 1px solid #ff7a7a;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    cursor: pointer;
+    background: #fff;
+}
+
+.category-tag input {
+    display: none;
+}
+
+.category-tag:hover {
+    background: #ffe3e3;
+}
+
+.form-select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+.form-input,
+.form-textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+}
+
+.form-textarea {
+    height: 120px;
+}
+
+.submit-btn {
+    width: 100%;
+    background: #ff6b6b;
+    color: #fff;
+    padding: 12px;
+    border-radius: 6px;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.submit-btn:hover {
+    background: #ff4b4b;
+}

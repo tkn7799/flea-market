@@ -1,16 +1,106 @@
-.header {
-    background: #000;
+/* === Header Base === */
+header {
+    align-items: center;
+    background-color: #000;
+    color: #fff;
+    display: flex;
+    font-size: 16px;
+    justify-content: space-between;
+    height: 90px;
+    padding: 0 30px;
+    position: sticky;
+    z-index: var(--mer-z-index-navigation-top);
+    top: 0px;
 }
 
-.header__inner {
-    margin: 0 auto;
-    padding: 20px 15px;
-    max-width: 1230px;
-}
-
+/* === Logo === */
 .header__logo {
+    width: 250px;
+    height: fit-content;
+    vertical-align: middle;
+}
+
+.header__search {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.header__search input {
+    width: 40%;
+    min-width: 240px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+}
+
+/* === Navigation === */
+.header-nav {
+    display: flex;
+}
+
+.header-nav__item {
+    display: flex;
+    align-items: center;
+    margin-right: 30px;
+}
+
+.header-nav__link {
     color: #fff;
     text-decoration: none;
+    font-size: 16px;
+    transition: color 0.2s ease;
+    margin-right: 30px;
+}
+
+.header-nav__link:hover {
+    color: #ff4b4b;
+}
+
+/* === 出品ボタン === */
+.header__btn {
+    background-color: #ffffff;
+    color: #000;
+    padding: 8px 18px;
+    border-radius: 6px;
     font-weight: bold;
-    font-size: 24px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.header__btn:hover {
+    background-color: #ff6a6a;
+}
+
+/* === ログアウトボタン === */
+.header-nav__button {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.header-nav__button:hover {
+    color: #ff4b4b;
+}
+
+/* === Responsive (スマホ対応) === */
+@media (max-width: 768px) {
+    .header__inner {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .header-nav {
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .header__btn {
+        align-self: flex-start;
+    }
 }

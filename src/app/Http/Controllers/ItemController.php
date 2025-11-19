@@ -3,21 +3,56 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Product;
 
 class ItemController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::with('images')->latest()->get();
+        $tab = $request->query('tab');
 
-        return view('products.index', compact('products'));
+        $query = Product::with('images')
+            ->latest();
+
+        if (Auth::check()) {
+            $query->where('user_id', '!=', Auth::id());
+        }
+
+        if ($tab === 'mylist' && Auth::check()) {
+            $userId = Auth::id();
+            $query->whereHas('favorites', function ($q) use ($userId) {
+                $q->where('user_id', $userId);
+            });
+        }
+
+        $products = $query->paginate(20);
+
+        return view('products.index', [
+            'products' => $products,
+            'tab' => $tab,
+        ]);
     }
 
-    public function show($id)
+    public function show($item_id)
     {
-        $product = Product::with(['images', 'category', 'user', 'comments.user'])->findOrFail($id);
+        $product = Product::with([
+            'images',
+            'categories',
+            'user',
+            'comments.user',
+        ])->findOrFail($item_id);
 
-        return view('products.detail', compact('product'));
+        $isFavorite = false;
+        if (Auth::check()) {
+            $isFavorite = $product->favorites()
+                ->where('user_id', Auth::id())
+                ->exists();
+        }
+
+        return view('products.detail', [
+            'product' => $product,
+            'isFavorite' => $isFavorite,
+        ]);
     }
 }
