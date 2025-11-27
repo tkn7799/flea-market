@@ -3,45 +3,42 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Address;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Address;
+use App\Models\Product;
 
 class AddressController extends Controller
 {
     /**
-     * 登録住所を更新（プロフィール用）
-     * POST /mypage/profile/address/registered
+     * 購入画面 → 住所変更ページ表示
      */
-    public function updateRegistered(Request $request)
+    public function edit($itemId)
     {
-        $request->validate([
-            'postal_code' => 'required|string|max:10',
-            'address'     => 'required|string|max:255',
-            'building'    => 'nullable|string|max:255',
-        ]);
+        $product = Product::findOrFail($itemId);
 
-        Address::updateOrCreate(
-            [
-                'user_id' => Auth::id(),
-                'type'    => 'registered',
-            ],
-            [
-                'postal_code' => $request->postal_code,
-                'address'     => $request->address,
-                'building'    => $request->building,
-            ]
-        );
+        // 登録済み住所（type = registered）
+        $registeredAddress = Address::where('user_id', Auth::id())
+            ->where('type', 'registered')
+            ->first();
 
-        return redirect()->route('profile.edit')
-            ->with('success', '登録住所を更新しました。');
+        $shippingAddress = Address::where('user_id', Auth::id())
+            ->where('type', 'shipping')
+            ->first();
+
+        return view('products.address', compact(
+            'itemId',
+            'product',
+            'registeredAddress',
+            'shippingAddress'
+        ));
     }
 
     /**
-     * 送付先住所を更新（プロフィール用）
-     * POST /mypage/profile/address/shipping
+     * 購入画面 → 住所変更処理
      */
-    public function updateShipping(Request $request)
+    public function update(Request $request, $itemId)
     {
+
         $request->validate([
             'postal_code' => 'required|string|max:10',
             'address'     => 'required|string|max:255',
@@ -49,10 +46,7 @@ class AddressController extends Controller
         ]);
 
         Address::updateOrCreate(
-            [
-                'user_id' => Auth::id(),
-                'type'    => 'shipping',
-            ],
+            ['user_id' => Auth::id(), 'type' => 'shipping'],
             [
                 'postal_code' => $request->postal_code,
                 'address'     => $request->address,
@@ -60,7 +54,77 @@ class AddressController extends Controller
             ]
         );
 
-        return redirect()->route('profile.edit')
-            ->with('success', '送付先住所を更新しました。');
+        return redirect()->route('purchase.index', ['item_id' => $itemId])
+            ->with('success', '送付先住所を更新しました');
+    }
+
+    /**
+     * マイページ：登録住所の更新
+     */
+    public function updateRegistered(Request $request)
+    {
+        $user = Auth::user();
+
+        $request->validate([
+            'postal_code' => 'required|string|max:10',
+            'address'     => 'required|string|max:255',
+            'building'    => 'nullable|string|max:255',
+        ]);
+
+        Address::updateOrCreate(
+            ['user_id' => $user->id, 'type' => 'registered'],
+            [
+                'postal_code' => $request->postal_code,
+                'address'     => $request->address,
+                'building'    => $request->building,
+            ]
+        );
+
+        return back()->with('success', '登録住所を更新しました');
+    }
+
+    /**
+     * マイページ：送付先住所の更新
+     */
+    public function updateShipping(Request $request)
+    {
+        $user = Auth::user();
+
+        $request->validate([
+            'postal_code' => 'required|string|max:10',
+            'address'     => 'required|string|max:255',
+            'building'    => 'nullable|string|max:255',
+        ]);
+
+        Address::updateOrCreate(
+            ['user_id' => $user->id, 'type' => 'shipping'],
+            [
+                'postal_code' => $request->postal_code,
+                'address'     => $request->address,
+                'building'    => $request->building,
+            ]
+        );
+
+        return back()->with('success', '送付先住所を更新しました');
+    }
+
+    public function addressEdit($itemId)
+    {
+        $product = Product::findOrFail($itemId);
+
+        $registeredAddress = Address::where('user_id', Auth::id())
+            ->where('type', 'registered')
+            ->first();
+
+        $shippingAddress = Address::where('user_id', Auth::id())
+            ->where('type', 'shipping')
+            ->first();
+
+        return view('products.address', compact(
+            'itemId',
+            'product',
+            'registeredAddress',
+            'shippingAddress'
+        ));
     }
 }

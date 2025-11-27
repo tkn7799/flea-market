@@ -27,17 +27,19 @@
 }
 
 .item-card {
-    width: 200px;
-    text-align: center;
+    display: block;
+    position: relative;
+    width: 180px;
+    text-decoration: none;
+    color: #333;
 }
 
 .item-image {
-    width: 200px;
-    height: 200px;
-    background-color: #ddd;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    width: 180px;
+    height: 180px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
 }
 
 .item-image img {
@@ -58,12 +60,18 @@
 
 .sold-badge {
     position: absolute;
-    top: 5px;
-    left: 5px;
-    background: red;
+    top: 8px;
+    left: 8px;
+    background: #e60023;
     color: white;
-    padding: 3px 8px;
-    font-size: 12px;
-    border-radius: 4px;
+    padding: 5px 12px;
+    font-size: 15px;
     font-weight: bold;
+    z-index: 10;
+    border-radius: 4px;
+}
+
+.item-name {
+    margin-top: 8px;
+    font-size: 14px;
 }

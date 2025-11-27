@@ -1,70 +1,109 @@
 @extends('layouts.app')
 
-@section('title', $product->product_name)
+@section('css')
+<link rel="stylesheet" href="{{ asset('css/product_detail.css') }}">
+@endsection
 
 @section('content')
-<link rel="stylesheet" href="{{ asset('css/product_detail.css') }}">
+<div class="detail-container">
 
-<div class="product-detail">
-
-  <div class="product-detail__left">
-    @if($product->images->isNotEmpty())
-      <img src="{{ asset('storage/' . $product->images->first()->image_path) }}" alt="{{ $product->product_name }}">
-    @else
-      <img src="{{ asset('images/no_image.png') }}" alt="No image">
-    @endif
-  </div>
-
-  <div class="product-detail__right">
-    <h2 class="product-title">{{ $product->product_name }}</h2>
-    <p class="brand-name">{{ $product->brand_name }}</p>
-    <p class="price">¥{{ number_format($product->price) }} <span class="tax">（税込）</span></p>
-
-    <div class="product-actions">
-      <div class="favorite">
-        <span class="icon">★</span>
-        <span>3</span>
-      </div>
-      <div class="comment-count">
-        <span class="icon">💬</span>
-        <span>{{ $product->comments->count() }}</span>
-      </div>
+    {{-- 左側：商品画像 --}}
+    <div class="detail-left">
+        @if ($product->images->count())
+            <img src="{{ asset('storage/' . $product->images[0]->image_path) }}" class="detail-main-image">
+        @else
+            <div class="no-image-box">商品画像</div>
+        @endif
     </div>
 
-    <button class="btn-purchase">購入手続きへ</button>
+    {{-- 右側：商品情報 --}}
+    <div class="detail-right">
 
-    <section class="description">
-      <h3>商品説明</h3>
-      <p>{{ $product->description }}</p>
-    </section>
+        <h2 class="detail-title">{{ $product->product_name }}</h2>
+        <p class="detail-brand">{{ $product->brand_name }}</p>
 
-    <section class="info">
-      <h3>商品の情報</h3>
-      <p><strong>カテゴリー：</strong>
-        {{ $product->category->name ?? '未設定' }}
-      </p>
-      <p><strong>商品の状態：</strong>{{ $product->condition }}</p>
-    </section>
+        <p class="detail-price">¥{{ number_format($product->price) }} <span>(税込)</span></p>
 
-    <section class="comments">
-      <h3>コメント（{{ $product->comments->count() }}）</h3>
-      @foreach($product->comments as $comment)
-        <div class="comment">
-          <div class="comment-user">
-            <div class="user-icon"></div>
-            <p class="username">{{ $comment->user->name }}</p>
-          </div>
-          <p class="comment-body">{{ $comment->comment }}</p>
+        {{-- お気に入り --}}
+        <div class="favorite-section">
+            <form action="{{ route('favorite.toggle', $product->id) }}" method="POST">
+                @csrf
+                <button type="submit" class="favorite-btn">
+                    @if($isFavorite)
+                        ❤️
+                    @else
+                        🤍
+                    @endif
+                </button>
+            </form>
+            <span>{{ $product->favorites->count() }}</span>
         </div>
-      @endforeach
 
-      <form action="{{ route('comments.store', $product->id) }}" method="POST" class="comment-form">
-        @csrf
-        <textarea name="comment" placeholder="商品のコメントを入力してください"></textarea>
-        <button type="submit" class="btn-comment">コメントを送信する</button>
-      </form>
-    </section>
-  </div>
+        {{-- 購入ボタン --}}
+        @if ($product->status === 'selling' && auth()->id() !== $product->user_id)
+            <a href="{{ route('purchase.index', $product->id) }}" class="purchase-btn">
+                購入手続きへ
+            </a>
+        @endif
 
+        <hr class="divider">
+
+        {{-- 商品説明 --}}
+        <h3 class="section-title">商品説明</h3>
+        <p class="detail-description">{{ $product->description }}</p>
+
+        {{-- 商品情報 --}}
+        <h3 class="section-title">商品の情報</h3>
+        <p>カテゴリー：
+            @foreach ($product->categories as $category)
+                <span class="category-tag">{{ $category->category_name }}</span>
+            @endforeach
+        </p>
+
+        <p>商品の状態：{{ $product->condition }}</p>
+
+        <hr class="divider">
+
+        {{-- コメント一覧 --}}
+        <div class="comment-list">
+            <h3 class="comment-title">コメント ({{ $product->comments->count() }})</h3>
+
+            @foreach ($product->comments as $comment)
+                <div class="comment-item">
+                    <div class="comment-user">{{ $comment->user->user_name }}</div>
+                    <div class="comment-body">{{ $comment->comment }}</div>
+                </div>
+            @endforeach
+        </div>
+
+        {{-- コメント入力欄（未ログインでも表示） --}}
+        <div class="comment-form">
+            <h3 class="comment-title">商品のコメント</h3>
+
+            <form action="{{ route('comment.store', $product->id) }}" method="POST">
+                @csrf
+
+                <textarea
+                    name="comment"
+                    class="comment-textarea"
+                    placeholder="ここにコメントを入力してください"
+                    {{ !Auth::check() ? 'disabled' : '' }}
+                ></textarea>
+
+                {{-- 未ログインなら注意文言 --}}
+                @guest
+                    <p class="comment-note">※ コメントするにはログインが必要です</p>
+                @endguest
+
+                <button
+                    type="submit"
+                    class="comment-submit-btn"
+                    {{ !Auth::check() ? 'disabled' : '' }}
+                >
+                    コメントを送信する
+                </button>
+            </form>
+        </div>
+    </div>
 </div>
 @endsection

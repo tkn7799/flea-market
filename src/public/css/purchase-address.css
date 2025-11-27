@@ -1,0 +1,66 @@
+.address-edit-container {
+    width: 500px;
+    margin: 40px auto;
+    padding: 30px;
+}
+
+.address-title {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 25px;
+}
+
+/* フォーム項目 */
+.address-field {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.address-field label {
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+
+.address-field input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+/* ボタンエリア */
+.address-btn-box {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.address-submit-btn {
+    width: 100%;
+    padding: 12px 0;
+    background-color: #ff6a6a;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.address-submit-btn:hover {
+    background-color: #ff4a4a;
+}
+
+/* エラー表示 */
+.error-box {
+    background: #ffe0e0;
+    border: 1px solid #ff8a8a;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+}
+
+.error-text {
+    color: #d60000;
+    font-size: 14px;
+    margin: 4px 0;
+}

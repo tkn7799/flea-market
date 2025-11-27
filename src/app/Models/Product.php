@@ -50,4 +50,9 @@ class Product extends Model
     {
         return $this->hasMany(Comment::class)->latest();
     }
+
+    public function purchases()
+    {
+        return $this->hasMany(Purchase::class);
+    }
 }

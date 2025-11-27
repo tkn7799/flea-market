@@ -1,129 +1,142 @@
-.product-detail {
+.detail-container {
     display: flex;
-    gap: 60px;
-    width: 80%;
-    margin: 60px auto;
+    max-width: 1100px;
+    margin: 30px auto;
+    gap: 40px;
 }
 
-.product-detail__left img {
-    width: 400px;
-    height: 400px;
-    object-fit: cover;
-    background-color: #eee;
+.detail-left {
+    width: 45%;
+}
+
+.detail-main-image {
+    width: 100%;
     border-radius: 4px;
 }
 
-.product-detail__right {
-    flex: 1;
+.no-image-box {
+    width: 100%;
+    height: 400px;
+    background: #ddd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.product-title {
+.detail-right {
+    width: 55%;
+}
+
+.detail-title {
     font-size: 22px;
     font-weight: bold;
-    margin-bottom: 4px;
 }
 
-.brand-name {
-    color: #555;
-    margin-bottom: 20px;
+.detail-price {
+    font-size: 24px;
+    margin-top: 10px;
 }
 
-.price {
-    font-size: 26px;
-    font-weight: bold;
-    margin-bottom: 20px;
-}
-
-.tax {
-    font-size: 14px;
-    color: #555;
-}
-
-.product-actions {
+.favorite-section {
     display: flex;
     align-items: center;
-    gap: 20px;
-    margin-bottom: 20px;
+    margin-top: 10px;
 }
 
-.product-actions .icon {
-    font-size: 18px;
-    margin-right: 4px;
-}
-
-.btn-purchase {
-    background-color: #f35b5b;
-    color: #fff;
+.favorite-btn {
+    background: none;
     border: none;
-    padding: 12px 40px;
-    border-radius: 4px;
-    font-size: 16px;
+    font-size: 26px;
     cursor: pointer;
-    margin-bottom: 30px;
 }
 
-.btn-purchase:hover {
-    background-color: #d94a4a;
+.purchase-btn {
+    display: block;
+    text-align: center;
+    background: #ff6a6a;
+    color: #fff;
+    padding: 12px;
+    border-radius: 6px;
+    margin: 15px 0;
+    text-decoration: none;
 }
 
-.description,
-.info,
-.comments {
-    margin-bottom: 30px;
+.divider {
+    margin: 20px 0;
 }
 
-h3 {
-    font-size: 18px;
+.section-title {
     font-weight: bold;
-    margin-bottom: 10px;
+    margin-top: 20px;
 }
 
-.comment {
-    display: flex;
-    align-items: flex-start;
-    margin-bottom: 15px;
+.category-tag {
+    display: inline-block;
+    background: #eee;
+    padding: 3px 10px;
+    margin-right: 5px;
+    border-radius: 10px;
+}
+
+.comment-list {
+    margin-top: 10px;
+}
+
+.comment-item {
+    background: #f8f8f8;
+    padding: 10px;
+    margin-bottom: 8px;
+    border-radius: 6px;
 }
 
 .comment-user {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    font-weight: bold;
 }
 
-.user-icon {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background-color: #ccc;
-}
-
-.comment-body {
-    background-color: #f8f8f8;
-    padding: 10px 15px;
-    border-radius: 6px;
-    margin-left: 10px;
-}
-
-.comment-form textarea {
-    width: 100%;
-    height: 100px;
-    margin-top: 10px;
-    margin-bottom: 15px;
+.comment-submit-btn {
+    display: block;
+    background: #ff6a6a;
+    color: #fff;
     padding: 10px;
     border-radius: 6px;
-    border: 1px solid #ccc;
-    resize: none;
+    margin-top: 10px;
+    width: 100%;
+    border: none;
+    cursor: pointer;
 }
 
-.btn-comment {
-    background-color: #f35b5b;
+/* コメント入力部分 */
+.comment-form {
+    margin-top: 30px;
+}
+
+.comment-textarea {
+    width: 400px;
+    height: 120px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+}
+
+.comment-submit-btn {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #ff6a6a;
     color: #fff;
     border: none;
-    padding: 10px 25px;
     border-radius: 4px;
     cursor: pointer;
 }
 
-.btn-comment:hover {
-    background-color: #d94a4a;
+.comment-submit-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.comment-note {
+    color: #999;
+    margin: 5px 0;
+    font-size: 14px;
 }

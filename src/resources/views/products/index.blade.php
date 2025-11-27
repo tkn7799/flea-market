@@ -22,9 +22,13 @@
         @foreach ($products as $product)
             <a href="{{ route('products.show', $product->id) }}" class="item-card">
 
-                {{-- 商品画像 --}}
                 <div class="item-image">
-                    @if ($product->images->isNotEmpty())
+                    {{-- SOLD表示 --}}
+                    @if ($product->status === 'sold')
+                        <span class="sold-badge">SOLD</span>
+                    @endif
+                    {{-- 商品画像 --}}
+                    @if ($product->images->first())
                         <img src="{{ asset('storage/' . $product->images->first()->image_path) }}" alt="{{ $product->product_name }}">
                     @else
                         <div class="no-image">No Image</div>
@@ -38,9 +42,6 @@
 
                 {{-- 商品名 --}}
                 <p class="item-name">{{ $product->product_name }}</p>
-
-                {{-- 価格 --}}
-                <p class="item-price">¥{{ number_format($product->price) }}</p>
 
             </a>
         @endforeach

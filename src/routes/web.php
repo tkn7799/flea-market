@@ -51,7 +51,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/purchase/address/{item_id}', [AddressController::class, 'update'])->name('purchase.address.update');
 
     // 購入処理
-    Route::post('/purchase/execute/{item_id}', [PurchaseController::class, 'purchase'])->name('purchase.execute');
+    Route::post('/purchase/execute/{item_id}', [PurchaseController::class, 'execute'])->name('purchase.execute');
+
+    Route::get('/purchase/success/{item_id}', [PurchaseController::class, 'success'])->name('purchase.success');
 
     // 登録住所更新
     Route::post('/mypage/profile/address/registered',
