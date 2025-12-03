@@ -25,7 +25,7 @@
         {{-- 支払い方法 --}}
         <h3 class="section-title">支払い方法</h3>
 
-        <select id="payment-select" name="payment_method_view" class="payment-select">
+        <select id="payment-select" class="payment-select">
             <option value="convenience">コンビニ払い</option>
             <option value="card">カード払い</option>
         </select>
@@ -75,7 +75,8 @@
         {{-- 購入ボタン --}}
         <form action="{{ route('purchase.execute', $product->id) }}" method="POST">
             @csrf
-            {{-- 実際に送信される値 --}}
+
+            {{-- JavaScript で値を変更する送信値 --}}
             <input type="hidden" name="payment_method" id="payment-method-hidden" value="convenience">
 
             <button class="purchase-btn" type="submit">購入する</button>
@@ -86,13 +87,20 @@
 
 <script>
 document.getElementById('payment-select').addEventListener('change', function () {
-    const value = this.value;
-    let text = '';
 
-    if (value === 'convenience') text = 'コンビニ払い';
-    if (value === 'card') text = 'カード払い';
-    document.getElementById('payment-method-display').textContent = text;
-    document.getElementById('payment-method-hidden').value = value;
+    const selected = this.value;
+    const display = document.getElementById('payment-method-display');
+    const hidden = document.getElementById('payment-method-hidden');
+
+    // 表示テキストを変更
+    if (selected === 'convenience') {
+        display.textContent = 'コンビニ払い';
+    } else if (selected === 'card') {
+        display.textContent = 'カード払い';
+    }
+
+    // 実際に送信される値を変更
+    hidden.value = selected;
 });
 </script>
 

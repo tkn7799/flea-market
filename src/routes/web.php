@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ProfileController;
@@ -9,6 +11,7 @@ use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\AddressController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -25,8 +28,26 @@ Route::get('/', [ItemController::class, 'index'])->name('products.index');
 
 Route::get('/item/{item_id}', [ItemController::class, 'show'])->name('products.show');
 
-Route::middleware(['auth'])->group(function () {
+    // メール認証を促す画面
+    Route::get('/email/verify', function () {
+        return view('auth.verify-email');
+    })->name('verification.notice');
 
+    // 認証リンククリック時の処理
+    Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+        $request->fulfill();
+
+        return redirect('/mypage');
+    })->middleware(['signed'])->name('verification.verify');
+
+    // 認証メールの再送
+    Route::post('/email/verification-notification', function (Request $request) {
+        $request->user()->sendEmailVerificationNotification();
+
+        return back()->with('message', '認証メールを再送しました');
+    })->middleware(['throttle:6,1'])->name('verification.send');
+
+Route::middleware(['auth', 'verified'])->group(function () {
     // プロフィール画面
     Route::get('/mypage', [ProfileController::class, 'show'])->name('profile.show');
     // プロフィール編集

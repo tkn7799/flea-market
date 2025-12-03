@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>Flea Market</title>
   <link rel="stylesheet" href="{{ asset('css/sanitize.css') }}">
   <link rel="stylesheet" href="{{ asset('css/common.css') }}">
@@ -23,7 +24,20 @@
     </div>
       @if(!in_array($routeName, ['login', 'register']))
           <div class="header__search">
-            <input type="text" placeholder="なにをお探しですか？">
+            <form action="{{ route('products.index') }}" method="GET">
+              <input
+                type="text"
+                name="keyword"
+                placeholder="なにをお探しですか？"
+                value="{{ request('keyword') }}"
+                class="search-input"
+              >
+
+              {{-- マイリスト中なら維持 --}}
+              @if (request('tab') === 'mylist')
+                <input type="hidden" name="tab" value="mylist">
+              @endif
+            </form>
           </div>
           <nav>
           <ul class="header-nav">

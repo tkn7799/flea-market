@@ -20,9 +20,9 @@ class PurchaseController extends Controller
     {
         $product = Product::with('images')->findOrFail($item_id);
 
-         $user = auth()->user();
+        $user = auth()->user();
 
-        // 初期値は登録住所
+        // 初期値は送付先住所 > なければ登録住所
         $address = $user->shippingAddress ?? $user->registeredAddress;
 
         return view('products.purchase', compact('product', 'address'));
@@ -34,8 +34,9 @@ class PurchaseController extends Controller
      */
     public function execute(Request $request, $itemId)
     {
+        // ひとまずシンプルなバリデーション
         $request->validate([
-            'payment_method' => 'required|string',
+            'payment_method' => 'required|string|in:convenience,card',
         ]);
 
         $product = Product::findOrFail($itemId);
@@ -44,43 +45,36 @@ class PurchaseController extends Controller
             return back()->with('error', 'この商品は既に購入されています');
         }
 
-        // === コンビニ払いの場合（デモのため即購入完了扱い）===
-        if ($request->payment_method === 'convenience') {
+        // Stripe 初期化
+        Stripe::setApiKey(env('STRIPE_SECRET'));
 
-            $this->completePurchase($product);
-
-            return redirect('/')
-                ->with('success', 'コンビニ支払いで購入が完了しました');
-        }
-
-        // === クレジットカード払い（Stripe） ===
-        if ($request->payment_method === 'card') {
-
-            Stripe::setApiKey(env('STRIPE_SECRET'));
-
-            $session = StripeSession::create([
-                'payment_method_types' => ['card'],
-                'line_items' => [[
-                    'price_data' => [
-                        'currency' => 'jpy',
-                        'product_data' => [
-                            'name' => $product->product_name,
-                        ],
-                        'unit_amount' => $product->price,
+        // Stripe Checkout セッション作成
+        $session = StripeSession::create([
+            'payment_method_types' => ['card'], // ここは card 固定（コンビニも擬似的に card として扱う）
+            'line_items' => [[
+                'price_data' => [
+                    'currency' => 'jpy',
+                    'product_data' => [
+                        'name' => $product->product_name,
                     ],
-                    'quantity' => 1,
-                ]],
-                'mode' => 'payment',
-                'success_url' => route('purchase.success', ['item_id' => $product->id]),
-                'cancel_url' => route('purchase.index', ['item_id' => $product->id]),
-            ]);
+                    'unit_amount' => $product->price,  // 税込金額(円)×1
+                ],
+                'quantity' => 1,
+            ]],
+            'mode' => 'payment',
+            'metadata' => [
+                // ユーザーが選んだ支払い方法をメモしておく（実際の支払いはカード）
+                'payment_method_label' => $request->payment_method,
+                'product_id'           => $product->id,
+                'buyer_id'             => Auth::id(),
+            ],
+            'success_url' => route('purchase.success', ['item_id' => $product->id]),
+            'cancel_url'  => route('purchase.index', ['item_id' => $product->id]),
+        ]);
 
-            return redirect($session->url);
-        }
-
-        return back()->with('error', '決済方法が不正です');
+        // Stripe の決済画面へリダイレクト
+        return redirect($session->url);
     }
-
 
     /**
      * Stripe決済成功後
@@ -90,12 +84,14 @@ class PurchaseController extends Controller
     {
         $product = Product::findOrFail($itemId);
 
-        $this->completePurchase($product);
+        // すでに sold なら何もしない
+        if ($product->status !== 'sold') {
+            $this->completePurchase($product);
+        }
 
         return redirect('/')
-            ->with('success', 'カード支払いで購入が完了しました');
+            ->with('success', '購入が完了しました');
     }
-
 
     /**
      * 住所変更ページ
@@ -120,7 +116,6 @@ class PurchaseController extends Controller
             'registeredAddress' => $registeredAddress,
         ]);
     }
-
 
     /**
      * 住所更新処理
@@ -147,20 +142,17 @@ class PurchaseController extends Controller
             ->with('success', '住所を更新しました');
     }
 
-
     /**
-     * 共通：購入完了処理
+     * 共通：購入完了処理（DB 更新）
      */
-    private function completePurchase($product)
+    private function completePurchase(Product $product)
     {
-        // 購入履歴作成
         Purchase::create([
-            'buyer_id'  => Auth::id(),
-            'seller_id' => $product->user_id,
-            'product_id'=> $product->id,
+            'buyer_id'   => Auth::id(),
+            'seller_id'  => $product->user_id,
+            'product_id' => $product->id,
         ]);
 
-        // 商品ステータス更新
         $product->status = 'sold';
         $product->save();
     }

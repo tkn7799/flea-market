@@ -36,7 +36,13 @@
     <div class="mypage-items">
 
         @php
-            $items = ($page === 'buy') ? $purchased : $selling;
+            if ($page === 'sell' || $page === null) {
+                $items = $selling;
+            } else {
+                $items = $purchased->map(function($purchase){
+                    return $purchase->product;
+                })->filter();
+            }
         @endphp
 
         @forelse ($items as $item)

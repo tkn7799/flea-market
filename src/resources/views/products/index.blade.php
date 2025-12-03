@@ -12,8 +12,14 @@
 
     {{-- タブ --}}
     <div class="tabs">
-        <a href="{{ url('/') }}" class="tab {{ $tab !== 'mylist' ? 'active' : '' }}">おすすめ</a>
-        <a href="{{ url('/?tab=mylist') }}" class="tab {{ $tab === 'mylist' ? 'active' : '' }}">マイリスト</a>
+        <a href="{{ url('/?' . http_build_query([
+            'tab' => null,
+            'keyword' => request('keyword'),
+        ])) }}" class="tab {{ $tab !== 'mylist' ? 'active' : '' }}">おすすめ</a>
+        <a href="{{ url('/?' . http_build_query([
+            'tab' => 'mylist',
+            'keyword' => request('keyword'),
+        ])) }}" class="tab {{ $tab === 'mylist' ? 'active' : '' }}">マイリスト</a>
     </div>
 
     {{-- 商品一覧 --}}

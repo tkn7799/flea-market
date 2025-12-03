@@ -1,81 +1,127 @@
+/* ===== コンテナ ===== */
 .sell-container {
-    max-width: 700px;
-    margin: 0 auto;
-    padding: 40px 20px;
+    width: 70%;
+    max-width: 600px;
+    margin: 30px auto;
+    font-family: 'Arial', sans-serif;
 }
 
+/* ===== タイトル ===== */
 .sell-title {
     text-align: center;
-    font-size: 22px;
+    font-size: 20px;
+    font-weight: bold;
     margin-bottom: 30px;
-    font-weight: bold;
 }
 
+/* ===== フォームセクション ===== */
 .form-section {
-    margin-bottom: 35px;
+    margin-bottom: 40px;
 }
 
+/* ===== 見出し ===== */
 .form-label {
-    display: block;
     font-weight: bold;
-    margin-bottom: 8px;
+    display: block;
+    margin-bottom: 10px;
+    font-size: 14px;
 }
 
+/* ===== 画像アップロード枠 ===== */
 .image-upload-box {
     width: 100%;
-    height: 160px;
-    border: 2px dashed #ff8d8d;
-    background: #fffafa;
+    height: 180px;
+    border: 1px dashed #ccc;
+    border-radius: 8px;
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
+    background: #fafafa;
+    position: relative;
 }
 
-.image-select-label {
-    color: #ff7a7a;
-    padding: 6px 14px;
-    border: 1px solid #ff7a7a;
+#image-preview-area {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+/* プレビュー画像 */
+.preview-image {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
     border-radius: 4px;
-    cursor: pointer;
 }
 
+/* 「画像を選択する」ボタン */
+.image-select-label {
+    background: #ff7f7f;
+    padding: 8px 20px;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+/* ===== 商品の詳細見出し ===== */
+.form-subtitle {
+    font-size: 15px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+}
+
+/* ===== カテゴリー一覧 ===== */
 .category-list {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 8px;
     margin-bottom: 15px;
 }
 
 .category-tag {
-    border: 1px solid #ff7a7a;
-    padding: 5px 12px;
+    display: inline-block;
+    padding: 6px 14px;
+    border: 1px solid #ff7373;
     border-radius: 20px;
-    font-size: 13px;
+    font-size: 12px;
     cursor: pointer;
     background: #fff;
+    color: #ff7373;
 }
 
-.category-tag input {
+/* チェック時の色変更 */
+.category-tag.selected {
+    background-color: #ff7373;
+    color: #fff;
+}
+
+/* 本物のチェックは非表示 */
+.category-checkbox {
     display: none;
 }
 
-.category-tag:hover {
-    background: #ffe3e3;
-}
-
+/* ===== セレクトボックス ===== */
 .form-select {
     width: 100%;
     padding: 10px;
     border-radius: 6px;
     border: 1px solid #ccc;
+    margin-bottom: 20px;
+    background: white;
 }
 
+/* ===== テキスト入力 ===== */
 .form-input,
 .form-textarea {
     width: 100%;
-    padding: 10px;
-    border-radius: 6px;
     border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 10px;
+    font-size: 14px;
     margin-bottom: 20px;
 }
 
@@ -83,18 +129,30 @@
     height: 120px;
 }
 
+/* ===== 出品ボタン ===== */
+.form-submit {
+    text-align: center;
+}
+
 .submit-btn {
     width: 100%;
+    padding: 12px 0;
+    border: none;
     background: #ff6b6b;
     color: #fff;
-    padding: 12px;
+    font-size: 14px;
     border-radius: 6px;
-    border: none;
-    font-size: 16px;
-    font-weight: bold;
     cursor: pointer;
 }
 
 .submit-btn:hover {
-    background: #ff4b4b;
+    background: #ff4d4d;
+}
+
+/* ===== バリデーションエラー ===== */
+.error-text {
+    color: red;
+    font-size: 12px;
+    margin-top: -15px;
+    margin-bottom: 15px;
 }

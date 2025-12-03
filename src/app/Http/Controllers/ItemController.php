@@ -11,9 +11,21 @@ class ItemController extends Controller
     public function index(Request $request)
     {
         $tab = $request->query('tab');
+        $keyword = $request->query('keyword');
 
         $query = Product::with('images')
             ->latest();
+
+        if (!empty($keyword)) {
+            $query->where('product_name', 'LIKE', '%' . $keyword . '%');
+        }
+
+        if ($tab === 'mylist' && Auth::check()) {
+            $userId = Auth::id();
+            $query->whereHas('favorites', function ($q) use ($userId) {
+                $q->where('user_id', $userId);
+            });
+        }
 
         if (Auth::check()) {
             $query->where('user_id', '!=', Auth::id());
@@ -31,6 +43,7 @@ class ItemController extends Controller
         return view('products.index', [
             'products' => $products,
             'tab' => $tab,
+            'keyword' => $keyword,
         ]);
     }
 

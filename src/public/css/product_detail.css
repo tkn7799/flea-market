@@ -37,17 +37,39 @@
     margin-top: 10px;
 }
 
-.favorite-section {
+.icon-section {
     display: flex;
     align-items: center;
-    margin-top: 10px;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.icon-group {
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
 
 .favorite-btn {
     background: none;
     border: none;
-    font-size: 26px;
+    font-size: 22px;
     cursor: pointer;
+    text-decoration: none;
+}
+
+.favorite-btn:focus,
+.favorite-btn:active {
+    outline: none;
+    text-decoration: none;
+}
+
+.comment-icon {
+    font-size: 22px;
+}
+
+.icon-count {
+    font-size: 16px;
 }
 
 .purchase-btn {
@@ -139,4 +161,15 @@
     color: #999;
     margin: 5px 0;
     font-size: 14px;
+}
+
+.comment-login-btn {
+    display: block;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.comment-submit-btn:hover {
+    background-color: #ff4d4d;
 }

@@ -15,18 +15,26 @@
   <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data">
     @csrf
     @method('PUT')
+
+    {{-- 画像プレビュー --}}
     <div class="profile-edit__image">
       <div class="profile-edit__circle">
-        @if ($user->profile_image)
-          <img src="{{ asset('storage/' . $user->profile_image) }}" alt="プロフィール画像">
-        @else
-          <div class="profile-edit__placeholder"></div>
-        @endif
+        <img 
+          id="profile-preview"
+          src="{{ $user->profile_image ? asset('storage/' . $user->profile_image) : '' }}"
+          alt="プロフィール画像"
+          style="{{ $user->profile_image ? '' : 'display:none;' }}"
+        >
+        @unless($user->profile_image)
+          <div id="profile-placeholder" class="profile-edit__placeholder"></div>
+        @endunless
       </div>
+
       <label class="profile-edit__upload">
         画像を選択する
-        <input type="file" name="profile_image" accept="image/*" hidden>
+        <input id="profile-image-input" type="file" name="profile_image" accept="image/*" hidden>
       </label>
+
       @error('profile_image')
       <div class="form__error">{{ $message }}</div>
       @enderror
@@ -69,4 +77,26 @@
     </div>
   </form>
 </div>
+
+{{-- ▼ 画像プレビュー用スクリプト --}}
+<script>
+document.getElementById('profile-image-input').addEventListener('change', function (e) {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function (event) {
+        const preview = document.getElementById('profile-preview');
+        const placeholder = document.getElementById('profile-placeholder');
+
+        preview.src = event.target.result;
+        preview.style.display = 'block';
+
+        if (placeholder) placeholder.style.display = 'none';
+    };
+
+    reader.readAsDataURL(file);
+});
+</script>
+
 @endsection

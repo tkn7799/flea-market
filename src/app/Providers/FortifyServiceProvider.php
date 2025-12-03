@@ -9,11 +9,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Redirect;
 use Laravel\Fortify\Fortify;
 use Laravel\Fortify\Contracts\RegisterResponse as RegisterResponseContract;
 use App\Http\Responses\RegisterResponse as CustomRegisterResponse;
 use Laravel\Fortify\Http\Requests\LoginRequest as FortifyLoginRequest;
 use App\Http\Requests\LoginRequest;
+
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -37,6 +39,18 @@ class FortifyServiceProvider extends ServiceProvider
 
             Fortify::loginView(function () {
                 return view('auth.login');
+            });
+            Fortify::authenticateUsing(function (Request $request) {
+                $user = \App\Models\User::where('email', $request->email)->first();
+
+                if (!$user) {
+                    return null;
+                }
+                if (!\Hash::check($request->password, $user->password)) {
+                    return null;
+                }
+                
+                return $user;
             });
 
             $this->app->singleton(RegisterResponseContract::class, CustomRegisterResponse::class);

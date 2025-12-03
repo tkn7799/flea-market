@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\ExhibitionRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Product;
 use App\Models\ProductImage;
@@ -11,34 +11,26 @@ use App\Models\Category;
 class ProductController extends Controller
 {
     /**
-     * 商品出品画面（GET）
-     * パス: /sell
+     * 出品画面表示
+     * GET /sell
      */
     public function create()
     {
-        $categories = Category::all(); // カテゴリ一覧取得
+        $categories = Category::all();
 
         return view('products.listing', compact('categories'));
     }
 
     /**
-     * 商品を保存する（POST）
-     * パス: /sell
+     * 出品処理
+     * POST /sell
+     * ExhibitionRequest を使用
      */
-    public function store(Request $request)
+    public function store(ExhibitionRequest $request)
     {
-        // バリデーション
-        $validated = $request->validate([
-            'product_name'  => 'required|string|max:255',
-            'brand_name'    => 'nullable|string|max:255',
-            'condition'     => 'required|string',
-            'description'   => 'required|string',
-            'price'         => 'required|integer|min:1',
-            'images.*'      => 'image|mimes:jpg,jpeg,png|max:2048',
-            'categories'    => 'required|array',
-        ]);
-
-        // 商品データを保存
+        // -----------------------------
+        // 1. 商品保存
+        // -----------------------------
         $product = Product::create([
             'user_id'      => Auth::id(),
             'product_name' => $request->product_name,
@@ -46,16 +38,19 @@ class ProductController extends Controller
             'condition'    => $request->condition,
             'description'  => $request->description,
             'price'        => $request->price,
-            'status'       => 'selling',  // 初期状態 = 出品中
+            'status'       => 'selling',
         ]);
 
-        // カテゴリ（多対多）を保存
+        // -----------------------------
+        // 2. カテゴリー保存（中間テーブル）
+        // -----------------------------
         $product->categories()->attach($request->categories);
 
-        // 画像保存
+        // -----------------------------
+        // 3. 画像保存
+        // -----------------------------
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $imageFile) {
-
                 $path = $imageFile->store('product_images', 'public');
 
                 ProductImage::create([
@@ -65,7 +60,10 @@ class ProductController extends Controller
             }
         }
 
+        // -----------------------------
+        // 4. 商品詳細ページへ遷移
+        // -----------------------------
         return redirect()->route('products.show', $product->id)
-                         ->with('success', '商品を出品しました！');
+            ->with('success', '商品を出品しました！');
     }
 }

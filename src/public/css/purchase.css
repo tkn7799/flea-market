@@ -1,4 +1,6 @@
-/* 全体レイアウト */
+/*===============================
+  全体レイアウト
+================================*/
 .purchase-container {
     width: 90%;
     max-width: 1100px;
@@ -8,100 +10,137 @@
     gap: 60px;
 }
 
-/* 左カラム */
+/*===============================
+  左カラム（商品情報）
+================================*/
 .left-box {
     width: 60%;
 }
 
+/* 商品画像 */
 .product-image-box img,
 .no-image {
-    width: 350px;
-    height: 350px;
+    width: 380px;
+    height: 380px;
     object-fit: cover;
-    background-color: #e5e5e5;
+    background-color: #eee;
     display: flex;
     justify-content: center;
     align-items: center;
     color: #666;
     font-size: 14px;
+    border-radius: 6px;
     margin-bottom: 20px;
 }
 
-/* 商品名・価格 */
+/* 商品名 */
 .product-name {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+
+/* 商品価格 */
+.product-price {
     font-size: 20px;
     font-weight: bold;
-    margin-bottom: 8px;
+    color: #222;
+    margin-bottom: 25px;
 }
 
-.product-price {
-    font-size: 18px;
-    margin-bottom: 20px;
-}
-
-/* 各セクションタイトル */
+/* セクションタイトル */
 .section-title {
+    font-size: 16px;
     font-weight: bold;
-    margin-top: 30px;
+    margin-top: 32px;
     margin-bottom: 10px;
 }
 
-/* 支払い方法 */
-.select-box {
-    width: 220px;
-}
-
+/* 支払い方法（セレクトボックス） */
 .payment-select {
-    width: 100%;
-    padding: 8px;
+    width: 250px;
+    padding: 10px;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 6px;
+    font-size: 15px;
 }
 
 /* 配送先 */
-.address-box p {
-    margin: 3px 0;
+.address-box {
+    background: #fafafa;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 12px 15px;
+    margin-bottom: 8px;
 }
 
+.address-box p {
+    margin: 4px 0;
+    font-size: 14px;
+}
+
+/* 住所変更リンク */
 .address-edit {
     display: inline-block;
-    margin-top: 5px;
-    color: #1e90ff;
+    margin-top: 4px;
     font-size: 14px;
+    color: #1e90ff;
     text-decoration: underline;
+    cursor: pointer;
 }
 
-/* 右カラム */
+/*===============================
+  右カラム（決済情報）
+================================*/
 .right-box {
     width: 35%;
 }
 
 /* 注文概要カード */
 .summary-card {
-    border: 1px solid #dcdcdc;
-    border-radius: 5px;
-    padding: 20px;
-    margin-bottom: 25px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 22px;
+    background: #fff;
+    margin-bottom: 30px;
 }
 
 .summary-card .row {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 15px;
+    margin-bottom: 14px;
+    font-size: 15px;
 }
 
-/* 購入ボタン */
+/* エラー表示 */
+.error-box {
+    background: #ffecec;
+    border: 1px solid #ff7a7a;
+    padding: 10px 12px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+}
+
+.error-text {
+    color: #d8000c;
+    font-size: 14px;
+}
+
+/*===============================
+  購入ボタン
+================================*/
 .purchase-btn {
     width: 100%;
-    background: #ff6b6b;
-    color: white;
-    font-size: 16px;
+    background: #ff5252;
+    color: #fff;
+    font-size: 17px;
     border: none;
-    padding: 14px;
-    border-radius: 6px;
+    padding: 14px 0;
+    border-radius: 8px;
     cursor: pointer;
+    transition: 0.2s;
 }
 
 .purchase-btn:hover {
-    background: #ff4a4a;
+    background: #ff3232;
 }
