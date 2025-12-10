@@ -9,7 +9,7 @@ header {
     height: 90px;
     padding: 0 30px;
     position: sticky;
-    z-index: var(--mer-z-index-navigation-top);
+    z-index: 9999;
     top: 0px;
 }
 
@@ -85,6 +85,10 @@ header {
 
 .header-nav__button:hover {
     color: #ff4b4b;
+}
+
+.search-btn {
+    display: none;
 }
 
 /* === Responsive (スマホ対応) === */

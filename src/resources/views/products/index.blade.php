@@ -31,7 +31,7 @@
                 <div class="item-image">
                     {{-- SOLD表示 --}}
                     @if ($product->status === 'sold')
-                        <span class="sold-badge">SOLD</span>
+                        <span class="sold-badge">Sold</span>
                     @endif
                     {{-- 商品画像 --}}
                     @if ($product->images->first())
@@ -42,7 +42,7 @@
 
                     {{-- 3. Sold 表示（status = sold の場合） --}}
                     @if ($product->status === 'sold')
-                        <span class="sold-badge">SOLD</span>
+                        <span class="sold-badge">Sold</span>
                     @endif
                 </div>
 

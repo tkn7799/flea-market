@@ -85,3 +85,9 @@
     font-size: 20px;
     color: #333;
 }
+
+.item-card__img img,
+.item-card__img--placeholder {
+    position: relative;
+    z-index: 1;
+}

@@ -29,9 +29,14 @@
             </div>
 
             {{-- エラー（images.*） --}}
+            @if ($errors->has('images'))
+                <p class="error-text">{{ $errors->first('images') }}</p>
+            @endif
+
             @if ($errors->has('images.*'))
                 <p class="error-text">{{ $errors->first('images.*') }}</p>
             @endif
+
         </div>
 
         {{-- 商品の詳細 --}}
@@ -100,7 +105,7 @@
 
             {{-- 販売価格 --}}
             <label class="form-label">販売価格</label>
-            <input type="number" name="price" class="form-input" placeholder="¥" value="{{ old('price') }}">
+            <input type="text" name="price" class="form-input" placeholder="¥" value="{{ old('price') }}">
             @error('price')
                 <p class="error-text">{{ $message }}</p>
             @enderror

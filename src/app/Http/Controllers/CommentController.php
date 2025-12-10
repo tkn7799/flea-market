@@ -2,30 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CommentRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Comment;
+use App\Models\Product;
 
 class CommentController extends Controller
 {
-    /**
-     * コメント投稿
-     * パス: POST /item/{item_id}/comment
-     */
-    public function store(Request $request, $productId)
+    public function store(CommentRequest $request, $item_id)
     {
-        // バリデーション
-        $request->validate([
-            'comment' => 'required|string|max:1000',
-        ]);
+        $product = Product::findOrFail($item_id);
+
 
         // コメント保存
         Comment::create([
             'user_id'    => Auth::id(),
-            'product_id' => $productId,
+            'product_id' => $product->id,
             'comment'    => $request->comment,
         ]);
 
-        return redirect()->back()->with('success', 'コメントを投稿しました！');
+        return redirect("/item/{$item_id}")->with('success', 'コメントを投稿しました');
     }
 }

@@ -15,6 +15,8 @@ use Laravel\Fortify\Contracts\RegisterResponse as RegisterResponseContract;
 use App\Http\Responses\RegisterResponse as CustomRegisterResponse;
 use Laravel\Fortify\Http\Requests\LoginRequest as FortifyLoginRequest;
 use App\Http\Requests\LoginRequest;
+use Laravel\Fortify\Contracts\LoginResponse as LoginResponseContract;
+use App\Http\Responses\LoginResponse;
 
 
 class FortifyServiceProvider extends ServiceProvider
@@ -54,6 +56,8 @@ class FortifyServiceProvider extends ServiceProvider
             });
 
             $this->app->singleton(RegisterResponseContract::class, CustomRegisterResponse::class);
+
+            $this->app->singleton(LoginResponseContract::class, LoginResponse::class);
 
             RateLimiter::for('login', function (Request $request) {
                 $email = (string) $request->email;

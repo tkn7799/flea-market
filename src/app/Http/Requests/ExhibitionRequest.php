@@ -11,9 +11,10 @@ class ExhibitionRequest extends FormRequest
     public function rules()
     {
         return [
+            'images'      => 'required',
+            'images.*'    => 'mimes:jpeg,png',
             'product_name' => 'required|string',
             'description'  => 'required|string|max:255',
-            'images.*'     => 'required|mimes:jpeg,png',
             'categories'   => 'required|array|min:1',
             'condition'    => 'required|string',
             'price'        => 'required|numeric|min:0'
@@ -23,13 +24,13 @@ class ExhibitionRequest extends FormRequest
     public function messages()
     {
         return [
+            'images.required' => '商品画像を選択してください',
+            'images.*.mimes'  => '商品画像はJPEGまたはPNGのみ使用できます',
+
             'product_name.required' => '商品名を入力してください',
 
             'description.required' => '商品説明を入力してください',
             'description.max'      => '商品説明は255文字以内で入力してください',
-
-            'images.*.required' => '商品画像を選択してください',
-            'images.*.mimes'    => '商品画像はJPEGまたはPNGのみ使用できます',
 
             'categories.required' => 'カテゴリーを選択してください',
 

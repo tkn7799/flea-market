@@ -37,6 +37,7 @@
               @if (request('tab') === 'mylist')
                 <input type="hidden" name="tab" value="mylist">
               @endif
+              <button type="submit" class="search-btn">検索</button>
             </form>
           </div>
           <nav>
@@ -54,7 +55,7 @@
               @else
             <li class="header-nav__item">
               <a class="header-nav__link" href="/login">ログイン</a>
-              <a class="header-nav__link" href="/register">マイページ</a>
+              <a class="header-nav__link" href="/login">マイページ</a>
             </li>
             @endif
               <a class="header__btn" href="/sell"><li >出品</li></a>
@@ -62,7 +63,7 @@
         </nav>
       @endif
   </header>
-  
+
   <main>
     @yield('content')
   </main>

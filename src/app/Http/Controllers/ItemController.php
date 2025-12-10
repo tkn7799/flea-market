@@ -13,29 +13,29 @@ class ItemController extends Controller
         $tab = $request->query('tab');
         $keyword = $request->query('keyword');
 
-        $query = Product::with('images')
-            ->latest();
+        $query = Product::with('images')->latest();
 
         if (!empty($keyword)) {
-            $query->where('product_name', 'LIKE', '%' . $keyword . '%');
+            $query->where('product_name', 'LIKE', "%{$keyword}%");
         }
 
-        if ($tab === 'mylist' && Auth::check()) {
-            $userId = Auth::id();
-            $query->whereHas('favorites', function ($q) use ($userId) {
-                $q->where('user_id', $userId);
+        if ($tab === 'mylist') {
+            if (!Auth::check()) {
+                return view('products.index', [
+                    'products' => collect([]),
+                    'tab' => $tab,
+                    'keyword' => $keyword,
+            ]);
+        }
+
+        $userId = Auth::id();
+        $query->whereHas('favorites', function ($q) use ($userId) {
+            $q->where('user_id', $userId);
             });
         }
 
         if (Auth::check()) {
             $query->where('user_id', '!=', Auth::id());
-        }
-
-        if ($tab === 'mylist' && Auth::check()) {
-            $userId = Auth::id();
-            $query->whereHas('favorites', function ($q) use ($userId) {
-                $q->where('user_id', $userId);
-            });
         }
 
         $products = $query->paginate(20);

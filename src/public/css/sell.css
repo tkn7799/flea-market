@@ -149,10 +149,8 @@
     background: #ff4d4d;
 }
 
-/* ===== バリデーションエラー ===== */
 .error-text {
     color: red;
-    font-size: 12px;
-    margin-top: -15px;
-    margin-bottom: 15px;
+    font-size: 13px;
+    margin-top: 5px;
 }

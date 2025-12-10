@@ -9,11 +9,17 @@
 
     {{-- 左側：商品画像 --}}
     <div class="detail-left">
-        @if ($product->images->count())
-            <img src="{{ asset('storage/' . $product->images[0]->image_path) }}" class="detail-main-image">
-        @else
-            <div class="no-image-box">商品画像</div>
-        @endif
+        <div class="detail-image-wrapper">
+            @if ($product->images->count())
+                <img src="{{ asset('storage/' . $product->images[0]->image_path) }}" class="detail-main-image">
+            @else
+                <div class="no-image-box">商品画像</div>
+            @endif
+
+            @if ($product->status === 'sold')
+                <div class="sold-label">Sold</div>
+            @endif
+        </div>
     </div>
 
     {{-- 右側：商品情報 --}}
@@ -87,15 +93,25 @@
 
             @foreach ($product->comments as $comment)
                 <div class="comment-item">
-                    <div class="comment-user">{{ $comment->user->user_name }}</div>
-                    <div class="comment-body">{{ $comment->comment }}</div>
+                    <div class="comment-user-icon">
+                        @if ($comment->user->profile_image)
+                            <img src="{{ asset('storage/' . $comment->user->profile_image) }}" alt="icon">
+                        @else
+                            <div class="comment-user-placeholder"></div>
+                        @endif
+                    </div>
+
+                    <div class="comment-body-area">
+                        <div class="comment-user">{{ $comment->user->user_name }}</div>
+                        <div class="comment-body">{{ $comment->comment }}</div>
+                    </div>
                 </div>
             @endforeach
         </div>
 
         {{-- コメント入力欄（未ログインでも表示） --}}
         <div class="comment-form">
-            <h3 class="comment-title">商品のコメント</h3>
+            <h3 class="comment-title">商品へのコメント</h3>
 
             @auth
                 {{-- ログインしている場合：通常の投稿フォーム --}}
@@ -107,6 +123,10 @@
                         class="comment-textarea"
                         placeholder="ここにコメントを入力してください"
                     ></textarea>
+
+                    @error('comment')
+                        <p class="error-text">{{ $message }}</p>
+                    @enderror
 
                     <button type="submit" class="comment-submit-btn">
                         コメントを送信する
