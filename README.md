@@ -1,4 +1,4 @@
-# laravel-docker-template
+# 模擬案件フリマアプリ
 
 ## 環境構築
 
@@ -178,7 +178,7 @@ php artisan test
 - MySQL 8.0.26
 
 ## ER 図
-
+https://github.com/user-attachments/assets/eb27816c-8277-47d0-ba44-42da91feaec2
 ## URL
 
 - phpMyAdmin：http://localhost:8080/
