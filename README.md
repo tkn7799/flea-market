@@ -133,7 +133,7 @@ FLUSH PRIVILEGES;
 cp .env .env.testing
 ```
 
-ァイルの作成ができたたら、.env.testing ファイルの文頭部分にある APP_ENV と APP_KEY を編集します。
+ファイルの作成ができたたら、.env.testing ファイルの文頭部分にある APP_ENV と APP_KEY を編集します。
 .env.testing
 
 ```
@@ -178,7 +178,9 @@ php artisan test
 - MySQL 8.0.26
 
 ## ER 図
+
 ![image](https://github.com/user-attachments/assets/eb27816c-8277-47d0-ba44-42da91feaec2)
+
 ## URL
 
 - phpMyAdmin：http://localhost:8080/
