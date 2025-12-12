@@ -25,7 +25,7 @@ class MyListIndexTest extends TestCase
         $this->actingAs($user);
 
         // 他人の商品2つ
-        $product1 = Product::factory()->create();
+        $product1 = Product::factory()->create(['product_name' => 'PRODUCT_A']);
 
         // product1 だけお気に入り登録
         Favorite::factory()->create([
@@ -33,7 +33,7 @@ class MyListIndexTest extends TestCase
             'product_id' => $product1->id
         ]);
 
-        $product2 = Product::factory()->create();
+        $product2 = Product::factory()->create(['product_name' => 'PRODUCT_B']);
 
         $response = $this->get('/?tab=mylist');
 
@@ -41,7 +41,7 @@ class MyListIndexTest extends TestCase
         $response->assertSeeText($product1->product_name);
 
         // product2 は非表示
-        $response->assertDontSeeText($product2->product_name);
+        $response->assertDontSee($product2->product_name);
     }
 
     /**

@@ -17,9 +17,9 @@
     @method('PUT')
 
     {{-- 画像プレビュー --}}
-    <div class="profile-edit__image">
+    <div class="profile-edit__image-row">
       <div class="profile-edit__circle">
-        <img 
+        <img
           id="profile-preview"
           src="{{ $user->profile_image ? asset('storage/' . $user->profile_image) : '' }}"
           alt="プロフィール画像"

@@ -57,7 +57,7 @@
 
 /* 「画像を選択する」ボタン */
 .image-select-label {
-    background: #ff7f7f;
+    background: #FF5555;
     padding: 8px 20px;
     border-radius: 5px;
     color: white;
@@ -85,7 +85,7 @@
 .category-tag {
     display: inline-block;
     padding: 6px 14px;
-    border: 1px solid #ff7373;
+    border: 1px solid #FF5555;
     border-radius: 20px;
     font-size: 12px;
     cursor: pointer;
@@ -95,7 +95,7 @@
 
 /* チェック時の色変更 */
 .category-tag.selected {
-    background-color: #ff7373;
+    background-color: #FF5555;
     color: #fff;
 }
 
@@ -138,7 +138,7 @@
     width: 100%;
     padding: 12px 0;
     border: none;
-    background: #ff6b6b;
+    background: #FF5555;
     color: #fff;
     font-size: 14px;
     border-radius: 6px;
@@ -146,7 +146,7 @@
 }
 
 .submit-btn:hover {
-    background: #ff4d4d;
+    background: #FF5555;
 }
 
 .error-text {

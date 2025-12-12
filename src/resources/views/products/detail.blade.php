@@ -69,7 +69,7 @@
             </a>
         @endif
 
-        <hr class="divider">
+        <class="divider">
 
         {{-- 商品説明 --}}
         <h3 class="section-title">商品説明</h3>
@@ -77,15 +77,22 @@
 
         {{-- 商品情報 --}}
         <h3 class="section-title">商品の情報</h3>
-        <p>カテゴリー：
-            @foreach ($product->categories as $category)
-                <span class="category-tag">{{ $category->category_name }}</span>
-            @endforeach
-        </p>
 
-        <p>商品の状態：{{ $product->condition }}</p>
+        <div class="detail-info-row">
+            <p class="detail-info-title">カテゴリー</p>
+            <div class="detail-info-value">
+                @foreach ($product->categories as $category)
+                    <span class="category-tag">{{ $category->category_name }}</span>
+                @endforeach
+            </div>
+        </div>
 
-        <hr class="divider">
+        <div class="detail-info-row">
+            <p class="detail-info-title">商品の状態</p>
+            <p class="detail-info-text">{{ $product->condition }}</p>
+        </div>
+
+        <class="divider">
 
         {{-- コメント一覧 --}}
         <div class="comment-list">
@@ -111,7 +118,7 @@
 
         {{-- コメント入力欄（未ログインでも表示） --}}
         <div class="comment-form">
-            <h3 class="comment-title">商品へのコメント</h3>
+            <h3 class="comment-title-product">商品へのコメント</h3>
 
             @auth
                 {{-- ログインしている場合：通常の投稿フォーム --}}

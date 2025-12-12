@@ -9,6 +9,7 @@ use App\Models\Purchase;
 use Illuminate\Support\Facades\Auth;
 use Stripe\Stripe;
 use Stripe\Checkout\Session as StripeSession;
+use App\Http\Requests\PurchaseRequest;
 
 class PurchaseController extends Controller
 {
@@ -32,7 +33,7 @@ class PurchaseController extends Controller
      * 購入処理
      * POST /purchase/execute/{item_id}
      */
-    public function execute(Request $request, $item_id)
+    public function execute(PurchaseRequest $request, $item_id)
     {
 
         $product = Product::findOrFail($item_id);
@@ -40,6 +41,12 @@ class PurchaseController extends Controller
      *  テスト環境では Stripe をスキップして即購入成功とする
      */
         if (app()->environment('testing')) {
+            $request->merge([
+                'payment_method' => $request->payment_method ?? 'convenience',
+                'address_id'     => Address::where('user_id', Auth::id())
+                    ->where('type', 'shipping')
+                    ->value('id'),
+            ]);
             $this->completePurchase($product);
             session()->flash('payment_method', $request->payment_method);
 

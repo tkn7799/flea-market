@@ -17,11 +17,19 @@
     width: 60%;
 }
 
+/* --- 商品画像 + 商品名・価格を横並びに --- */
+.product-header {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    margin-bottom: 25px;
+}
+
 /* 商品画像 */
 .product-image-box img,
 .no-image {
-    width: 380px;
-    height: 380px;
+    width: 180px;
+    height: 180px;
     object-fit: cover;
     background-color: #eee;
     display: flex;
@@ -30,33 +38,42 @@
     color: #666;
     font-size: 14px;
     border-radius: 6px;
-    margin-bottom: 20px;
 }
 
-/* 商品名 */
+/* 商品名・価格 */
+.product-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
 .product-name {
     font-size: 22px;
     font-weight: bold;
-    margin-bottom: 6px;
+    margin-bottom: 10px;
 }
 
-/* 商品価格 */
 .product-price {
     font-size: 20px;
     font-weight: bold;
     color: #222;
-    margin-bottom: 25px;
+}
+
+/* --- 横線 --- */
+.line {
+    width: 100%;
+    border-bottom: 1px solid #ccc;
+    margin: 30px 0;
 }
 
 /* セクションタイトル */
 .section-title {
     font-size: 16px;
     font-weight: bold;
-    margin-top: 32px;
     margin-bottom: 10px;
 }
 
-/* 支払い方法（セレクトボックス） */
+/* 支払い方法セレクト */
 .payment-select {
     width: 250px;
     padding: 10px;
@@ -65,13 +82,18 @@
     font-size: 15px;
 }
 
-/* 配送先 */
+/*===============================
+  配送先
+================================*/
+.address-section {
+    position: relative;
+}
+
 .address-box {
     background: #fafafa;
     border: 1px solid #ddd;
     border-radius: 6px;
     padding: 12px 15px;
-    margin-bottom: 8px;
 }
 
 .address-box p {
@@ -79,10 +101,11 @@
     font-size: 14px;
 }
 
-/* 住所変更リンク */
+/* 「変更する」ボタンを右上に固定 */
 .address-edit {
-    display: inline-block;
-    margin-top: 4px;
+    position: absolute;
+    top: 0;
+    right: 0;
     font-size: 14px;
     color: #1e90ff;
     text-decoration: underline;
@@ -96,11 +119,11 @@
     width: 35%;
 }
 
-/* 注文概要カード */
 .summary-card {
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    padding: 22px;
+    width: 100%;
+    border: 1px solid #bfbfbf;
+    border-radius: 4px;
+    padding: 0px;
     background: #fff;
     margin-bottom: 30px;
 }
@@ -112,35 +135,49 @@
     font-size: 15px;
 }
 
-/* エラー表示 */
-.error-box {
-    background: #ffecec;
-    border: 1px solid #ff7a7a;
-    padding: 10px 12px;
-    border-radius: 6px;
-    margin-bottom: 20px;
-}
-
-.error-text {
-    color: #d8000c;
-    font-size: 14px;
-}
-
 /*===============================
   購入ボタン
 ================================*/
 .purchase-btn {
     width: 100%;
-    background: #ff5252;
+    background: #FF5555;
     color: #fff;
     font-size: 17px;
     border: none;
     padding: 14px 0;
     border-radius: 8px;
     cursor: pointer;
-    transition: 0.2s;
 }
 
 .purchase-btn:hover {
-    background: #ff3232;
+    opacity: 0.9;
+}
+
+.error-text {
+    color: red;
+    font-size: 16px;
+    margin-top: 5px;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 28px 40px;
+    font-size: 20px;
+}
+
+.summary-row .label {
+    color: #333;
+}
+
+.summary-row .value {
+    font-weight: bold;
+    color: #222;
+}
+
+.summary-divider {
+    width: 100%;
+    height: 1px;
+    background: #bfbfbf;
 }

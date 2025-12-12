@@ -10,14 +10,15 @@
 .tab {
     padding: 10px 20px;
     font-size: 16px;
+    font-weight: 700;
     color: #666;
     text-decoration: none;
 }
 
 .tab.active {
-    color: #ff4e4e;
+    color: #FF5555;
     font-weight: bold;
-    border-bottom: 2px solid #ff4e4e;
+    border-bottom: 2px solid #FF5555;
 }
 
 /* =============================

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Address;
 use App\Models\Product;
+use App\Http\Requests\AddressRequest;
 
 class AddressController extends Controller
 {
@@ -36,7 +37,7 @@ class AddressController extends Controller
     /**
      * 購入画面 → 住所変更処理
      */
-    public function update(Request $request, $itemId)
+    public function update(AddressRequest $request, $itemId)
     {
 
         $request->validate([

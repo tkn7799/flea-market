@@ -9,6 +9,9 @@
   <title>Flea Market</title>
   <link rel="stylesheet" href="{{ asset('css/sanitize.css') }}">
   <link rel="stylesheet" href="{{ asset('css/common.css') }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   @yield('css')
 </head>
 
@@ -22,7 +25,7 @@
     <div class="header__logo">
           <a href="/"><img src="{{ asset('img/auth-header.png') }}" alt="ロゴ"></a>
     </div>
-      @if(!in_array($routeName, ['login', 'register']))
+      @if(!in_array($routeName, ['login', 'register', 'verification.notice']))
           <div class="header__search">
             <form action="{{ route('products.index') }}" method="GET">
               <input

@@ -21,6 +21,7 @@
 
 .form__group-title {
     text-align: left;
+    font-weight: 700;
 }
 
 .form__error {
@@ -52,6 +53,8 @@
     background: #FF5555;
     color: #fff;
     cursor: pointer;
+    font-weight: 700;
+    font-size: 20px;
 }
 
 .register__link {

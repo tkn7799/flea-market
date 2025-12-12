@@ -11,6 +11,7 @@
 
 .detail-main-image {
     width: 100%;
+    aspect-ratio: 1 / 1;
     border-radius: 4px;
 }
 
@@ -28,32 +29,33 @@
 }
 
 .detail-title {
-    font-size: 22px;
+    font-size: 45px;
     font-weight: bold;
 }
 
 .detail-price {
-    font-size: 24px;
+    font-size: 45px;
     margin-top: 10px;
 }
 
 .icon-section {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 40px;
     margin-bottom: 20px;
 }
 
 .icon-group {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 6px;
+    gap: 4px;
 }
 
 .favorite-btn {
     background: none;
     border: none;
-    font-size: 22px;
+    font-size: 32px;
     cursor: pointer;
     text-decoration: none;
 }
@@ -65,22 +67,24 @@
 }
 
 .comment-icon {
-    font-size: 22px;
+    font-size: 32px;
 }
 
 .icon-count {
-    font-size: 16px;
+    font-size: 18px;
+    font-weight: bold;
 }
 
 .purchase-btn {
     display: block;
     text-align: center;
-    background: #ff6a6a;
+    background: #FF5555;
     color: #fff;
     padding: 12px;
     border-radius: 6px;
     margin: 15px 0;
     text-decoration: none;
+    font-weight: 700;
 }
 
 .divider {
@@ -88,8 +92,13 @@
 }
 
 .section-title {
-    font-weight: bold;
+    font-weight: 700;
     margin-top: 20px;
+    font-size: 36px;
+}
+
+.detail-description {
+    font-size: 36px;
 }
 
 .category-tag {
@@ -104,6 +113,16 @@
     margin-top: 10px;
 }
 
+.comment-title {
+    font-size: 36px;
+    font-weight: bold;
+}
+
+.comment-title-product {
+    font-size: 28px;
+    font-weight: bold;
+}
+
 .comment-item {
     background: #f8f8f8;
     padding: 10px;
@@ -113,18 +132,6 @@
 
 .comment-user {
     font-weight: bold;
-}
-
-.comment-submit-btn {
-    display: block;
-    background: #ff6a6a;
-    color: #fff;
-    padding: 10px;
-    border-radius: 6px;
-    margin-top: 10px;
-    width: 100%;
-    border: none;
-    cursor: pointer;
 }
 
 /* コメント入力部分 */
@@ -145,11 +152,13 @@
     display: inline-block;
     margin-top: 10px;
     padding: 10px 20px;
-    background-color: #ff6a6a;
+    width: 100%;
+    background-color: #FF5555;
     color: #fff;
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    font-weight: 700;
 }
 
 .comment-submit-btn:disabled {
@@ -171,7 +180,7 @@
 }
 
 .comment-submit-btn:hover {
-    background-color: #ff4d4d;
+    background-color: #FF5555;
 }
 
 .detail-image-wrapper {
@@ -238,4 +247,44 @@
 /* コメント本文側 */
 .comment-body-area {
     flex-grow: 1;
+}
+
+.favorite-btn,
+.comment-icon {
+    font-size: 24px;
+    display: flex;
+    justify-content: center;
+}
+
+.detail-info-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-top: 20px;
+}
+
+.detail-info-row {
+    display: flex;
+    align-items: center;
+    margin: 15px 0;
+    gap: 20px;
+}
+
+.detail-info-title {
+    width: 150px;
+    font-size: 24px;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.detail-info-text{
+    font-size: 22px;
+}
+
+/* 右側（値、カテゴリタグなど） */
+.detail-info-value {
+    font-size: 24px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
 }

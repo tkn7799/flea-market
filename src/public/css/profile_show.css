@@ -52,15 +52,15 @@
 .mypage-edit-btn {
     display: inline-block;
     padding: 10px 20px;
-    color: #ff6a6a;
-    border: 2px solid #ff6a6a;
+    color: #FF5555;
+    border: 2px solid #FF5555;
     border-radius: 6px;
     text-decoration: none;
     font-weight: bold;
 }
 
 .mypage-edit-btn:hover {
-    background: #ff6a6a;
+    background: #FF5555;
     color: #fff;
 }
 
@@ -75,32 +75,45 @@
 
 .mypage-tab {
     font-size: 16px;
+    font-weight: 700;
     color: #666;
     text-decoration: none;
     padding-bottom: 5px;
 }
 
 .mypage-tab.active {
-    color: #ff6a6a;
+    color: #FF5555;
     font-weight: bold;
-    border-bottom: 2px solid #ff6a6a;
+    border-bottom: 2px solid #FF5555;
 }
 
 /* ---------- 商品一覧 ---------- */
 .mypage-items {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
     gap: 30px;
     margin-top: 20px;
 }
 
+@media (max-width: 900px) {
+    .mypage-items {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .mypage-items {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
 .item-card {
-    text-align: center;
+    text-align: left;
 }
 
 .item-card__img {
     width: 100%;
-    height: 170px;
+    aspect-ratio: 1 / 1;
     background: #eee;
     display: flex;
     align-items: center;
@@ -121,7 +134,7 @@
 }
 
 .item-card__name {
-    margin-top: 10px;
+    margin-top: 8px;
     font-size: 14px;
     color: #333;
 }
@@ -130,4 +143,10 @@
     margin-top: 40px;
     text-align: center;
     color: #888;
+}
+
+.item-card a {
+    text-decoration: none;
+    font-size: 25px;
+    font-weight: 400;
 }

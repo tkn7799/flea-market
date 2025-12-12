@@ -15,10 +15,6 @@ class ItemController extends Controller
 
         $query = Product::with('images')->latest();
 
-        if (!empty($keyword)) {
-            $query->where('product_name', 'LIKE', "%{$keyword}%");
-        }
-
         if ($tab === 'mylist') {
             if (!Auth::check()) {
                 return view('products.index', [
@@ -32,6 +28,10 @@ class ItemController extends Controller
         $query->whereHas('favorites', function ($q) use ($userId) {
             $q->where('user_id', $userId);
             });
+        }
+
+        if (!empty($keyword)) {
+            $query->where('product_name', 'LIKE', "%{$keyword}%");
         }
 
         if (Auth::check()) {
