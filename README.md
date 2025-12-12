@@ -178,7 +178,7 @@ php artisan test
 - MySQL 8.0.26
 
 ## ER 図
-![image](https://github.com/user-attachments/assets/3e900935-0da0-4f54-a1f6-c58f1db4f9cbhttps://github.com/user-attachments/assets/eb27816c-8277-47d0-ba44-42da91feaec2)
+![image](https://github.com/user-attachments/assets/eb27816c-8277-47d0-ba44-42da91feaec2)
 ## URL
 
 - phpMyAdmin：http://localhost:8080/
