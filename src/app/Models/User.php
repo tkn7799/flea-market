@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Rating;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -71,6 +72,30 @@ class User extends Authenticatable implements MustVerifyEmail
     public function sales()
     {
         return $this->hasMany(Purchase::class, 'seller_id');
+    }
+
+    public function receivedRatings()
+    {
+        return $this->hasMany(Rating::class, 'to_user_id');
+    }
+
+    /**
+     * 自分が行った評価（自分が評価した側）
+     */
+    public function givenRatings()
+    {
+        return $this->hasMany(Rating::class, 'from_user_id');
+    }
+
+    /**
+     * 評価の平均値を算出 (FN005対応)
+     * まだ評価がない場合は null または 0 を返す
+     */
+    public function getAverageRatingAttribute()
+    {
+    // 小数点第1位で四捨五入する（例：3.45 -> 3.5）
+    $avg = $this->receivedRatings()->avg('rating');
+        return $avg ? round($avg, 1) : null;
     }
 }
 

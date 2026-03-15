@@ -10,6 +10,16 @@ use App\Models\Category;
 
 class ProductController extends Controller
 {
+    public function show($id)
+    {
+        $product = Product::with(['user.receivedRatings', 'images', 'categories'])->findOrFail($id);
+
+        $sellerAverageRating = $product->user->average_rating;
+        $sellerRatingCount = $product->user->receivedRatings->count();
+
+        return view('products.show', compact('product', 'sellerAverageRating', 'sellerRatingCount'));
+    }
+
     /**
      * 出品画面表示
      * GET /sell

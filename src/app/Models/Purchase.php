@@ -11,6 +11,7 @@ class Purchase extends Model
         'buyer_id',
         'seller_id',
         'product_id',
+        'status',
     ];
 
     public function product()
@@ -32,5 +33,20 @@ class Purchase extends Model
     public function seller()
     {
         return $this->belongsTo(User::class, 'seller_id');
+    }
+
+    public function messages()
+    {
+        return $this->hasMany(TransactionMessage::class);
+    }
+
+    public function ratings()
+    {
+        return $this->hasMany(Rating::class);
+    }
+
+    public function isCompleted()
+    {
+        return $this->status === 'completed';
     }
 }

@@ -53,6 +53,28 @@ class Product extends Model
 
     public function purchases()
     {
-        return $this->hasMany(Purchase::class);
+        return $this->hasOne(Purchase::class);
+    }
+
+    public function transactionMessages()
+    {
+        return $this->hasManyThrough(
+            TransactionMessage::class,
+            Purchase::class,
+            'product_id', // Purchaseの外部キー
+            'purchase_id', // TransactionMessageの外部キー
+            'id', // Productのローカルキー
+            'id'  // Purchaseのローカルキー
+            );
+    }
+
+    public function isTrading()
+    {
+        return $this->status === 'trading';
+    }
+
+    public function isSold()
+    {
+        return $this->status === 'sold';
     }
 }

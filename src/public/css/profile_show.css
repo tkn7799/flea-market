@@ -22,12 +22,20 @@
     gap: 30px;
 }
 
+/* 名前と星評価を縦に並べるグループ */
+.mypage-info-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
 .mypage-icon {
     width: 120px;
     height: 120px;
     border-radius: 50%;
     overflow: hidden;
     background: #ccc;
+    flex-shrink: 0;
 }
 
 .mypage-icon img {
@@ -48,20 +56,28 @@
     font-weight: bold;
 }
 
+/* 評価の星表示 (image_bcb5b9.png) */
+.mypage-stars {
+    font-size: 20px;
+    display: flex;
+    gap: 2px;
+}
+.star--filled {
+    color: #ffeb3b;
+} /* 黄色 */
+.star--empty {
+    color: #ccc;
+} /* グレー */
+
 /* 編集ボタン */
 .mypage-edit-btn {
     display: inline-block;
     padding: 10px 20px;
-    color: #FF5555;
-    border: 2px solid #FF5555;
+    color: #ff5555;
+    border: 1px solid #ff5555;
     border-radius: 6px;
     text-decoration: none;
     font-weight: bold;
-}
-
-.mypage-edit-btn:hover {
-    background: #FF5555;
-    color: #fff;
 }
 
 /* ---------- タブ ---------- */
@@ -70,7 +86,6 @@
     gap: 40px;
     margin-bottom: 20px;
     border-bottom: 1px solid #ddd;
-    padding-bottom: 10px;
 }
 
 .mypage-tab {
@@ -78,13 +93,25 @@
     font-weight: 700;
     color: #666;
     text-decoration: none;
-    padding-bottom: 5px;
+    padding-bottom: 10px;
+    display: flex;
+    align-items: center;
 }
 
 .mypage-tab.active {
-    color: #FF5555;
-    font-weight: bold;
-    border-bottom: 2px solid #FF5555;
+    color: #ff5555;
+    border-bottom: 2px solid #ff5555;
+}
+
+/* タブ内の赤い通知数 (image_bcb595.png) */
+.trading-badge {
+    background-color: #ff4d4d;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 10px;
+    margin-left: 5px;
+    vertical-align: middle;
 }
 
 /* ---------- 商品一覧 ---------- */
@@ -95,29 +122,19 @@
     margin-top: 20px;
 }
 
-@media (max-width: 900px) {
-    .mypage-items {
-        grid-template-columns: repeat(3, 1fr);
-    }
-}
-
-@media (max-width: 600px) {
-    .mypage-items {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
 .item-card {
     text-align: left;
+}
+
+/* バッジ配置の基準となるコンテナ */
+.item-card__img-container {
+    position: relative;
 }
 
 .item-card__img {
     width: 100%;
     aspect-ratio: 1 / 1;
     background: #eee;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     border-radius: 6px;
     overflow: hidden;
 }
@@ -128,9 +145,22 @@
     object-fit: cover;
 }
 
-.item-card__img--placeholder {
-    color: #888;
-    font-size: 14px;
+/* 商品画像左上の赤いバッジ (image_bcb595.png) */
+.item-notification-badge {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-color: #ff4d4d;
+    color: white;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+    z-index: 10;
 }
 
 .item-card__name {
@@ -139,14 +169,13 @@
     color: #333;
 }
 
-.mypage-empty {
-    margin-top: 40px;
-    text-align: center;
-    color: #888;
-}
-
 .item-card a {
     text-decoration: none;
-    font-size: 25px;
-    font-weight: 400;
+}
+
+.no-rating {
+    font-size: 14px;
+    color: #888;
+    margin-top: 5px;
+    display: inline-block;
 }

@@ -40,7 +40,7 @@ STRIPE_SECRET={stripeのAPIシークレットキー}
 
 ```
 
-5. アプリケーションキーの作成
+6. アプリケーションキーの作成
 
 PHP コンテナ上
 
@@ -48,19 +48,19 @@ PHP コンテナ上
 php artisan key:generate
 ```
 
-6. マイグレーションの実行
+7. マイグレーションの実行
 
 ```
 php artisan migrate
 ```
 
-7. シンボリックリンク作成
+8. シンボリックリンク作成
 
 ```
 php artisan storage:link
 ```
 
-8. シーディングの実行
+9. シーディングの実行
 
 ```
 php artisan db:seed
@@ -98,8 +98,9 @@ php artisan db:seed
 4. テストユーザー
 
 ```
-メールアドレス：sellerC@example.com
+メールアドレス：test@example.com
 パスワード：password123
+何も紐づけていないユーザー
 ※初回ログイン時は認証メールを再送してください
 ```
 

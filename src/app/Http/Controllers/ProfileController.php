@@ -16,18 +16,33 @@ class ProfileController extends Controller
      */
     public function show()
     {
-        $user = Auth::user();
+        $user = Auth::user()->load('receivedRatings');
         $page = request()->query('page', 'sell'); // タブ切替
 
+        $averageRating = $user->average_rating;
+        $ratingCount = $user->receivedRatings->count();
+
         // 出品商品
-        $selling = $user->products()->with('images')->get();
+        $selling = $user->products()->with(['images', 'purchases'])->get();
 
         // 購入商品
-        $purchased = Purchase::with('product.images')
-            ->where('buyer_id', Auth::id())
+        $purchased = Purchase::with(['product.images', 'messages', 'product', 'seller', 'buyer'])
+            ->where(function($query) use ($user) {
+                $query->where('buyer_id', $user->id)
+                        ->orWhere('seller_id', $user->id);
+            })
+
+            ->latest()
             ->get();
 
-        return view('profile.show', compact('user', 'page', 'selling', 'purchased'));
+        return view('profile.show', compact(
+            'user',
+            'page',
+            'selling',
+            'purchased',
+            'averageRating',
+            'ratingCount'
+        ));
     }
 
     /**

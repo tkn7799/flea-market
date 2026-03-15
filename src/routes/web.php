@@ -11,6 +11,8 @@ use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\AddressController;
+use App\Http\Controllers\TransactionMessageController;
+use App\Http\Controllers\RatingController;
 
 
 /*
@@ -57,6 +59,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/mypage/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/mypage/profile', [ProfileController::class, 'update'])->name('profile.update');
 
+    Route::get('/mypage/purchases', [PurchaseController::class, 'index_list'])->name('purchase.list');
+
     // 商品出品
     Route::get('/sell', [ProductController::class, 'create'])->name('products.create');
     Route::post('/sell', [ProductController::class, 'store'])->name('products.store');
@@ -75,6 +79,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/purchase/execute/{item_id}', [PurchaseController::class, 'execute'])->name('purchase.execute');
 
     Route::get('/purchase/success/{item_id}', [PurchaseController::class, 'success'])->name('purchase.success');
+
+    Route::prefix('transaction/{purchase}')->group(function () {
+        // 取引チャット
+        Route::get('/chat', [TransactionMessageController::class, 'index'])->name('transaction.chat');
+        Route::post('/message', [TransactionMessageController::class, 'store'])->name('transaction.message.store');
+        Route::patch('/message/{message}', [TransactionMessageController::class, 'update'])->name('transaction.message.update');
+        Route::delete('/message/{message}', [TransactionMessageController::class, 'destroy'])->name('transaction.message.destroy');
+    });
+
+        // 評価
+        Route::post('/transaction/{purchase}/rating', [RatingController::class, 'store'])->name('rating.store');
 
     // 登録住所更新
     Route::post('/mypage/profile/address/registered',

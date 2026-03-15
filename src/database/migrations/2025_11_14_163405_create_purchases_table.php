@@ -18,6 +18,7 @@ class CreatePurchasesTable extends Migration
             $table->foreignId('buyer_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('seller_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('product_id')->constrained()->onDelete('cascade');
+            $table->string('status')->default('shipping_pending');
             $table->timestamps();
         });
     }

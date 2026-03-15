@@ -13,13 +13,34 @@ use App\Http\Requests\PurchaseRequest;
 
 class PurchaseController extends Controller
 {
-    /**
+    public function index_list()
+    {
+        $user = Auth::user();
+
+        $purchases = Purchase::with('product.images')
+            ->where('buyer_id', $user->id)
+            ->latest()
+            ->get();
+
+        $sales = Purchase::with('product.images')
+            ->where('seller_id', $user->id)
+            ->latest()
+            ->get();
+
+        return view('mypage.purchase_list', compact('purchases', 'sales'));
+    }
+/**
      * 商品購入画面
      * GET /purchase/{item_id}
      */
     public function index($item_id)
     {
         $product = Product::with('images')->findOrFail($item_id);
+
+        if ($product->status !== 'selling') {
+            return redirect()->route('products.show', $item_id)
+                ->with('error', 'この商品は現在購入できません。');
+        }
 
         $user = auth()->user();
 
@@ -102,12 +123,13 @@ class PurchaseController extends Controller
         $product = Product::findOrFail($item_id);
 
         // すでに sold なら何もしない
-        if ($product->status !== 'sold') {
-            $this->completePurchase($product);
+        if ($product->status === 'selling') {
+            $purchase = $this->completePurchase($product);
+            return redirect()->route('transaction.chat', $purchase->id)
+                ->with('success', '購入が完了しました。取引メッセージを送ってみましょう！');
         }
 
-        return redirect('/')
-            ->with('success', '購入が完了しました');
+        return redirect('/');
     }
 
     /**
@@ -159,13 +181,15 @@ class PurchaseController extends Controller
      */
     private function completePurchase(Product $product)
     {
-        Purchase::create([
+        $purchase = Purchase::create([
             'buyer_id'   => Auth::id(),
             'seller_id'  => $product->user_id,
             'product_id' => $product->id,
+            'status'     => 'shipping_pending',
         ]);
 
-        $product->status = 'sold';
-        $product->save();
+        $product->update(['status' => 'trading']);
+
+        return $purchase;
     }
 }
