@@ -32,15 +32,19 @@
 }
 
 .chat-header {
-    position: sticky;
-    top: 0;
-    z-index: 100;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     padding: 15px 30px;
     background-color: #ffffff;
     border-bottom: 1px solid #ddd;
+}
+
+/* 左側のタイトルとメッセージを包むコンテナ */
+.header-left {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 /* メッセージリストのスクロール設定 */
@@ -499,15 +503,13 @@
 }
 
 .transaction-status-message {
-    margin: 10px 20px;
+    margin: 0;
+    width: fit-content;
 }
 
 .status-alert {
-    padding: 12px 20px;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: bold;
-    text-align: center;
+    padding: 8px 15px;
+    font-size: 13px;
 }
 
 /* 取引完了：グリーン */

@@ -29,39 +29,39 @@
 
     <main class="chat-main">
         <header class="chat-header">
-            <section class="transaction-status-message">
-                @if($purchase->status === 'completed')
-                    <div class="status-alert status-alert--success">
-                        取引が完了しました。ご利用ありがとうございました！
+            <div class="header-left">
+                <div class="user-info">
+                    <div class="user-icon">
+                        @if($purchase->buyer_id === auth()->id() && $purchase->seller->profile_image)
+                            <img src="{{ asset('storage/' . $purchase->seller->profile_image) }}" alt="">
+                        @elseif($purchase->seller_id === auth()->id() && $purchase->buyer->profile_image)
+                            <img src="{{ asset('storage/' . $purchase->buyer->profile_image) }}" alt="">
+                        @else
+                            <div class="user-icon-placeholder"></div>
+                        @endif
                     </div>
-                @elseif($myRating && !$opponentRating)
-                    <div class="status-alert status-alert--info">
-                        評価を送信しました。相手からの評価待ちです。
-                    </div>
-                @elseif(!$myRating && $opponentRating)
-                    <div class="status-alert status-alert--warning">
-                        相手から評価されました。評価を返して取引を完了させてください。
-                    </div>
-    @endif
-</section>
-            <div class="user-info">
-                <div class="user-icon">
-                    @if($purchase->buyer_id === auth()->id() && $purchase->seller->profile_image)
-                        <img src="{{ asset('storage/' . $purchase->seller->profile_image) }}" alt="">
-                    @elseif($purchase->seller_id === auth()->id() && $purchase->buyer->profile_image)
-                        <img src="{{ asset('storage/' . $purchase->buyer->profile_image) }}" alt="">
-                    @else
-                        <div class="user-icon-placeholder"></div>
-                    @endif
-                </div>
 
-                <h2>「{{ $purchase->buyer_id === auth()->id() ? $purchase->seller->user_name : $purchase->buyer->user_name }}」さんとの取引画面</h2>
+                    <h2>「{{ $purchase->buyer_id === auth()->id() ? $purchase->seller->user_name : $purchase->buyer->user_name }}」さんとの取引画面</h2>
+                </div>
+                <section class="transaction-status-message">
+                    @if($purchase->status === 'completed')
+                        <div class="status-alert status-alert--success">
+                            取引が完了しました。ご利用ありがとうございました！
+                        </div>
+                    @elseif($myRating && !$opponentRating)
+                        <div class="status-alert status-alert--info">
+                            評価を送信しました。相手からの評価待ちです。
+                        </div>
+                    @elseif(!$myRating && $opponentRating)
+                        <div class="status-alert status-alert--warning">
+                            相手から評価されました。評価を返して取引を完了させてください。
+                        </div>
+                    @endif
+                </section>
             </div>
 
-            @if($purchase->status !== 'completed')
-                @if($isBuyer && !$myRating)
-                    <button type="button" class="btn-complete" onclick="showRatingModal()">取引を完了する</button>
-                @endif
+            @if($purchase->status !== 'completed' && $isBuyer && !$myRating)
+                <button type="button" class="btn-complete" onclick="showRatingModal()">取引を完了する</button>
             @endif
         </header>
 

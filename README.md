@@ -12,16 +12,15 @@
 ### Laravel 環境構築
 
 1. docker-compose exec php bash
-2. cd flea-market/
-3. composer install
-4. PHP コンテナ上で実行
+2. composer install
+3. PHP コンテナ上で実行
 
 ```
 cp .env.example .env
 exit
 ```
 
-5. .env に以下の環境変数を追加
+4. .env に以下の環境変数を追加
    STRIPE_KEY と STRIPE_SECRET は新規追加
 
 ```
@@ -40,7 +39,7 @@ STRIPE_SECRET={stripeのAPIシークレットキー}
 
 ```
 
-6. アプリケーションキーの作成
+5. アプリケーションキーの作成
 
 PHP コンテナ上
 
@@ -48,19 +47,19 @@ PHP コンテナ上
 php artisan key:generate
 ```
 
-7. マイグレーションの実行
+6. マイグレーションの実行
 
 ```
 php artisan migrate
 ```
 
-8. シンボリックリンク作成
+7. シンボリックリンク作成
 
 ```
 php artisan storage:link
 ```
 
-9. シーディングの実行
+8. シーディングの実行
 
 ```
 php artisan db:seed
@@ -180,7 +179,7 @@ php artisan test
 
 ## ER 図
 
-![image](https://github.com/user-attachments/assets/eb27816c-8277-47d0-ba44-42da91feaec2)
+![image](https://github.com/user-attachments/assets/281080fc-8527-4656-9685-411cfdfd9b79)
 
 ## URL
 
