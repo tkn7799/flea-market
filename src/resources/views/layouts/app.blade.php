@@ -25,7 +25,7 @@
     <div class="header__logo">
           <a href="/"><img src="{{ asset('img/auth-header.png') }}" alt="ロゴ"></a>
     </div>
-      @if(!in_array($routeName, ['login', 'register', 'verification.notice']))
+      @if(!in_array($routeName, ['login', 'register', 'verification.notice', 'transaction.chat']))
           <div class="header__search">
             <form action="{{ route('products.index') }}" method="GET">
               <input
